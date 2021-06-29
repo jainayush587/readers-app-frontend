@@ -8,11 +8,11 @@
               <Delete class="delete" />
           </div>
       </div>
-      <img :src="require(`../assets/storyCards/${post.storyCoverPhoto}.jpg`)" alt="">
+      <img :src="require(`../assets/storyCards/stock-1.jpg`)" alt="">
       <div class="info">
-          <h4>{{post.storyTitle}}</h4>
-          <h6>Author: {{post.storyAuthor}}</h6>
-          <h6>Posted on: {{post.storyDate}}</h6>
+          <h4>{{post.title}}</h4>
+          <h6>Author: {{post.author.username}}</h6>
+          <h6>Posted on: {{moment(post.created_at).format('DD-MM-YYYY')}}</h6>
           <router-link class="link" to="#">
               View Story <Arrow class="arrow" />
           </router-link>
@@ -24,6 +24,10 @@
 import Arrow from '../assets/Icons/arrow-right-light.svg';
 import Edit from '../assets/Icons/edit-regular.svg';
 import Delete from '../assets/Icons/trash-regular.svg';
+import Vue from 'vue';
+import moment from 'moment';
+Vue.prototype.moment = moment;
+
 export default {
     name: "storyCard",
     props: ["post"],

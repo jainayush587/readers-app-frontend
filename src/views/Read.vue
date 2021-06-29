@@ -16,6 +16,7 @@
 
 <script>
 
+import { mapGetters, mapActions } from "vuex";
 import StoryCard from '../components/StoryCard';
 
 export default {
@@ -23,7 +24,12 @@ export default {
     components:{
       StoryCard,
     },
+    created: function () {
+        // a function to call getposts action
+        this.GetPosts()
+    },
     computed: {
+      ...mapGetters({Posts: "StatePosts", User: "StateUser"}),
       sampleStoryCards(){
         return this.$store.state.sampleStoryCards;
       },
@@ -35,6 +41,9 @@ export default {
             this.$store.commit("toggleEditPost", payload);
         }
       }
+    },
+    methods: {
+      ...mapActions(["GetPosts"]),  
     },
     beforeDestroy() {
       this.$store.commit("toggleEditPost", false);

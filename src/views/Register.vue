@@ -145,7 +145,7 @@ export default {
         try {
           this.$v.form.$touch();
           await this.Register(this.form);
-          this.$router.push("/home");
+          this.$router.push("/");
           this.error = false;
         } catch (error) {
           this.errorMsg = error;

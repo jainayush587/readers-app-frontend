@@ -102,7 +102,7 @@ export default {
         try {
           this.$v.form.$touch();
           await this.LogIn(User);
-          this.$router.push("/home");
+          this.$router.push("/");
           this.error = false
         } catch (error) {
           this.error = true

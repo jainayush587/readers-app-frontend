@@ -5,7 +5,7 @@
       <div class="container">
         <h3>View recent Stories</h3>
         <div class="blog-cards">
-          <StoryCard :post="post" v-for="(post, index) in sampleStoryCards" :key="index" />
+          <StoryCard :post="post" v-for="post in Posts.slice(Math.max(Posts.length - 5, 0)).reverse()" :key="post.id" />
         </div>
       </div>
     </div>
@@ -16,6 +16,9 @@
 //Add home page story related photo
 import StoryPost from '../components/StoryPost.vue';
 import StoryCard from '../components/StoryCard.vue';
+
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Home",
   components: { StoryPost, StoryCard },
@@ -39,14 +42,21 @@ export default {
           storyCoverPhoto: "designed-for-everyone",
         },
       ],
-      
     };
+  },
+  created: function(){
+    // a function to call getposts action
+    this.GetPosts()
   },
   computed: {
     sampleStoryCards(){
       return this.$store.state.sampleStoryCards;
     },
-    isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
+    isLoggedIn : function(){ return this.$store.getters.isAuthenticated},
+    ...mapGetters({Posts: "StatePosts", User: "StateUser"}),
+  },
+  methods:{
+    ...mapActions(["GetPosts"]),
   }
 };
 </script>
