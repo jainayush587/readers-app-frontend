@@ -18,48 +18,72 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: { 
+      title: 'Home',
+    },
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
-    meta: { guest: true },
+    meta: { 
+      title: 'Register',
+      guest: true 
+    },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
-    meta: { guest: true },
+    meta: { 
+      title: 'Login',
+      guest: true 
+    },
   },
   {
     path: "/forgot-password",
     name: "ForgotPassword",
     component: ForgotPassword,
-    meta: { guest: true },
+    meta: { 
+      title: 'Forgot Password',
+      guest: true 
+    },
   },
   {
     path: "/write",
     name: "Write",
     component: Write,
-    meta: { requiresAuth: true },
+    meta: { 
+      title: 'Write',
+      requiresAuth: true 
+    },
   },
   {
     path: "/story-preview",
     name: "StoryPreview",
     component: StoryPreview,
-    meta: { requiresAuth: true },
+    meta: { 
+      title: 'Story Preview',
+      requiresAuth: true 
+    },
   },
   {
     path: "/read",
     name: "Read",
     component: Read,
-    meta: { requiresAuth: true },
+    meta: { 
+      title: 'Read',
+      requiresAuth: true 
+    },
   },
   {
     path: "/view-story/:storyid",
     name: "ViewStory",
     component: ViewStory,
-    meta: { requiresAuth: true },
+    meta: { 
+      title: 'Story View',
+      requiresAuth: true 
+    },
   },
   {
     path: "*",
@@ -84,6 +108,11 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.beforeEach((to, _, next) => {
+  document.title = `${to.meta.title} | FireBlogs`;
+  next();
 });
 
 router.beforeEach((to, from, next) => {
