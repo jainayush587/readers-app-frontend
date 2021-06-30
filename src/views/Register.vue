@@ -7,29 +7,29 @@
           Login
         </router-link>
       </p>
-      <h2>Create Your FireBlog Account</h2>
+      <h2>Create Your ReadWrite Account</h2>
       <div class="inputs">
         <div class="input">
-          <input type="text" placeholder="First Name" v-model="form.firstName" @blur="$v.form.firstName.$touch()"
+          <input type="text" placeholder="First Name" v-model="form.full_name" @blur="$v.form.full_name.$touch()"
             :class="{
-              'is-invalid': shouldAppendErrorClass($v.form.firstName),
-              'is-valid': shouldAppendValidClass($v.form.firstName)
+              'is-invalid': shouldAppendErrorClass($v.form.full_name),
+              'is-valid': shouldAppendValidClass($v.form.full_name)
             }" />
           <user class="icon" />
         </div>
-        <div v-if="$v.form.firstName.$error">
-          <p class="error" v-if="!$v.form.firstName.required" >this field is required</p>
+        <div v-if="$v.form.full_name.$error">
+          <p class="error" v-if="!$v.form.full_name.required" >this field is required</p>
         </div>
         <div class="input">
-          <input type="text" placeholder="Last Name" v-model="form.lastName" @blur="$v.form.lastName.$touch()"
+          <input type="text" placeholder="Last Name" v-model="form1.lastName" @blur="$v.form1.lastName.$touch()"
             :class="{
-              'is-invalid': shouldAppendErrorClass($v.form.lastName),
-              'is-valid': shouldAppendValidClass($v.form.lastName)
+              'is-invalid': shouldAppendErrorClass($v.form1.lastName),
+              'is-valid': shouldAppendValidClass($v.form1.lastName)
             }" />
           <user class="icon" />
         </div>
-        <div v-if="$v.form.lastName.$error">
-          <p class="error" v-if="!$v.form.lastName.required" >this field is required</p>
+        <div v-if="$v.form1.lastName.$error">
+          <p class="error" v-if="!$v.form1.lastName.required" >this field is required</p>
         </div>
         <div class="input">
           <input type="text" placeholder="Username" v-model="form.username" @blur="$v.form.username.$touch()"
@@ -44,16 +44,16 @@
           <p class="error" v-if="!$v.form.username.minLength">Field must have at least {{ $v.form.username.$params.minLength.min }} characters.</p>
         </div>
         <div class="input">
-          <input type="text" placeholder="Email" v-model="form.email" @blur="$v.form.email.$touch()"
+          <input type="text" placeholder="Email" v-model="form1.email" @blur="$v.form1.email.$touch()"
             :class="{
-              'is-invalid': shouldAppendErrorClass($v.form.email),
-              'is-valid': shouldAppendValidClass($v.form.email)
+              'is-invalid': shouldAppendErrorClass($v.form1.email),
+              'is-valid': shouldAppendValidClass($v.form1.email)
             }"/>
           <emailIcon class="icon" />
         </div>
-        <div v-if="$v.form.email.$error">
-          <p class="error" v-if="!$v.form.email.required" >this field is required</p>
-          <p class="error" v-if="!$v.form.email.email" >Invalid email format</p>
+        <div v-if="$v.form1.email.$error">
+          <p class="error" v-if="!$v.form1.email.required" >this field is required</p>
+          <p class="error" v-if="!$v.form1.email.email" >Invalid email format</p>
         </div>
         <div class="input">
           <input type="password" placeholder="Password" v-model="form.password" @blur="$v.form.password.$touch()"
@@ -95,27 +95,30 @@ export default {
     data() {
       return {
         form:{
-          firstName: "",
           username: "",
+          full_name: "",
           password: "",
         },
+        form1:{
+          lastName: "",
+          email: "",
+        },
         //firstName: "",
-        lastName: "",
+        
         //username: "",
-        email: "",
+        
         //password: "",
         error: false,
-        status: null,
         errorMsg: '',
       };
     },
     mixins: [validationMixin],
     validations: {
       form:{
-        firstName: { required },
-        lastName: { required },
+        full_name: { required },
+        
         username: { required, minLength: minLength(4) },
-        email: { email, required },
+        
         password: { 
           required,
           strongPassword(password) {
@@ -127,10 +130,15 @@ export default {
             );
           }
         },
+        
         // password2: {
         //   required,
         //   sameAsPassword: sameAs("password1")
         // }
+      },
+      form1:{
+        lastName: { required },
+        email: { email, required },
       }
     },
     methods: {
@@ -143,7 +151,8 @@ export default {
       },
       async submit() {
         try {
-          this.$v.form.$touch();
+          this.$v.$touch();
+          console.log(this.form);
           await this.Register(this.form);
           this.$router.push("/");
           this.error = false;

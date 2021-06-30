@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-card">
+  <div class="story-card">
       <div v-show="editPost" class="icons">
           <div class="icon">
               <Edit class="edit" />
@@ -8,12 +8,12 @@
               <Delete class="delete" />
           </div>
       </div>
-      <img :src="require(`../assets/storyCards/stock-1.jpg`)" alt="">
+      <img :src="require(`../assets/storyCards/stock-5.jpg`)" alt="">
       <div class="info">
           <h4>{{post.title}}</h4>
           <h6>Author: {{post.author.username}}</h6>
           <h6>Posted on: {{moment(post.created_at).format('DD-MM-YYYY')}}</h6>
-          <router-link class="link" to="#">
+          <router-link class="link" :to="{ name: 'ViewStory', params: { storyid: post.id } }">
               View Story <Arrow class="arrow" />
           </router-link>
       </div>
@@ -24,6 +24,7 @@
 import Arrow from '../assets/Icons/arrow-right-light.svg';
 import Edit from '../assets/Icons/edit-regular.svg';
 import Delete from '../assets/Icons/trash-regular.svg';
+//import ViewStory from '../views/ViewStory.vue';
 import Vue from 'vue';
 import moment from 'moment';
 Vue.prototype.moment = moment;
@@ -35,6 +36,7 @@ export default {
         Arrow,
         Edit,
         Delete,
+        //ViewStory,
     },
     computed: {
       editPost(){
@@ -45,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-card {
+.story-card {
   position: relative;
   cursor: pointer;
   display: flex;

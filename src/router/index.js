@@ -6,6 +6,8 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import ForgotPassword from "../views/ForgotPassword";
 import Write from "../views/Write";
+import StoryPreview from "../views/StoryPreview";
+import ViewStory from "../views/ViewStory";
 import Read from "../views/Read";
 import PageNotFound from "../components/PageNotFound";
 
@@ -42,9 +44,21 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/story-preview",
+    name: "StoryPreview",
+    component: StoryPreview,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/read",
     name: "Read",
     component: Read,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/view-story/:storyid",
+    name: "ViewStory",
+    component: ViewStory,
     meta: { requiresAuth: true },
   },
   {

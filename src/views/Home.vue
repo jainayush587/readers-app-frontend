@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <StoryPost v-if="!isLoggedIn" :post="welcomeScreen" />
-    <div v-else class="blog-card-wrap">
+    <div v-else class="story-card-wrap">
       <div class="container">
         <h3>View recent Stories</h3>
-        <div class="blog-cards">
+        <div class="story-cards">
           <StoryCard :post="post" v-for="post in Posts.slice(Math.max(Posts.length - 5, 0)).reverse()" :key="post.id" />
         </div>
       </div>
@@ -30,23 +30,25 @@ export default {
         welcomeScreen: true,
         photo: "coding",
       },
-      sampleStoryPost: [
-        {
-          title: "This is a Story 1 Title!",
-          storyHTML: "This is Filler line",
-          storyCoverPhoto: "beautiful-stories",
-        },
-        {
-          title: "This is a Story 2 Title!",
-          storyHTML: "This is Filler 2 line",
-          storyCoverPhoto: "designed-for-everyone",
-        },
-      ],
+      SamplePosts: this.GetPosts(),
+      // sampleStoryPost: [
+      //   {
+      //     title: "This is a Story 1 Title!",
+      //     storyHTML: "This is Filler line",
+      //     storyCoverPhoto: "beautiful-stories",
+      //   },
+      //   {
+      //     title: "This is a Story 2 Title!",
+      //     storyHTML: "This is Filler 2 line",
+      //     storyCoverPhoto: "designed-for-everyone",
+      //   },
+      // ],
     };
   },
   created: function(){
     // a function to call getposts action
-    this.GetPosts()
+    this.GetPosts();
+    //console.log(this.Posts);
   },
   computed: {
     sampleStoryCards(){
@@ -62,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-card-wrap {
+.story-card-wrap {
   h3 {
     font-weight: 300;
     font-size: 28px;

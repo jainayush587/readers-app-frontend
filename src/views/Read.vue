@@ -1,13 +1,13 @@
 <template>
-  <div class="blog-card-wrap">
-    <div class="blog-cards container">
+  <div class="story-card-wrap">
+    <div class="story-cards container">
       <div class="toggle-edit">
         <span>Toggle Editing Post</span>
         <input type="checkbox" v-model="editPost" />
       </div>
       <StoryCard
-        v-for="(post, index) in sampleStoryCards"
-        :key="index"
+        v-for="post in Posts.slice(Math.max(Posts.length - 5, 0)).reverse()"
+        :key="post.id"
         :post="post"
       />
     </div>
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-cards {
+.story-cards {
   position: relative;
   .toggle-edit {
     display: flex;

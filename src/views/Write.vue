@@ -1,13 +1,13 @@
 <template>
   <div class="create-post">
-  <StoryCoverPreview v-show="this.$store.state.storyPhotoPreview" />
+  <StoryCoverPreview v-show="this.$store.state.storyPhotoPreview" :story="story" />
     <!-- <Loading v-show="loading" /> -->
     <div class="container">
       <div :class="{ invisible: !error }" class="err-message">
         <p><span>Error: </span>{{ this.errorMsg }}</p>
       </div>
-      <div class="blog-info">
-        <input type="text" placeholder="Enter Story Title" v-model="storyTitle" />
+      <div class="story-info">
+        <input type="text" placeholder="Enter Story Title" v-model="story.title" />
         <div class="upload-file">
           <label for="story-photo">Upload Cover Photo</label>
           <input
@@ -30,13 +30,13 @@
       <div class="editor">
         <vue-editor
           :editorOptions="editorSettings"
-          v-model="storyHTML"
+          v-model="story.write_up"
           useCustomImageHandler
         />
       </div>
-      <div class="blog-actions">
-        <button>Publish Blog</button>
-        <router-link to="#" class="router-button">Post Preview</router-link>
+      <div class="story-actions">
+        <button @click="submit">Publish Story</button>
+        <router-link :to="{name: 'StoryPreview'}" class="router-button">Story Preview</router-link>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@
 
 <script>
 import StoryCoverPreview from '../components/StoryCoverPreview';
-
+import { mapGetters, mapActions } from "vuex";
 import Quill from 'quill';
 window.Quill = Quill;
 const ImageResize = require('quill-image-resize-module').default;
@@ -57,6 +57,10 @@ export default {
     },
     data(){
       return {
+        story: {
+          title: '',
+          write_up: '',
+        },
         file: null,
         error: null,
         errorMsg: null,
@@ -68,7 +72,12 @@ export default {
         },
       };
     },
+    created: function () {
+      // a function to call getposts action
+      this.GetPosts()
+    },
     methods:{
+      ...mapActions(["CreatePost", "GetPosts"]),
       fileChange(){
         this.file = this.$refs.storyPhoto.files[0];
         const fileName = this.file.name;
@@ -77,9 +86,17 @@ export default {
       },
       openPreview(){
         this.$store.commit("openPhotoPreview");
-      }
+      },
+      async submit() {
+        try {
+          await this.CreatePost(this.story);
+        } catch (error) {
+          this.errorMsg = "Sorry you cannot publish the story now";
+        }
+      },  
     },
     computed: {
+      ...mapGetters({ User: "StateUser" }),
       storyCoverPhotoName(){
         return this.$store.state.storyPhotoName;
       },
@@ -99,6 +116,9 @@ export default {
           this.$store.commit('newStoryPost', payload);
         },
       },
+    },
+    beforeDestroy() {
+      this.$store.commit("fileNameChange", null);
     }
 }
 </script>
@@ -155,7 +175,7 @@ export default {
       font-weight: 600;
     }
   }
-  .blog-info {
+  .story-info {
     display: flex;
     margin-bottom: 32px;
     input:nth-child(1) {
@@ -213,7 +233,7 @@ export default {
       padding: 20px 16px 30px;
     }
   }
-  .blog-actions {
+  .story-actions {
     margin-top: 32px;
     button {
       margin-right: 16px;

@@ -1,6 +1,6 @@
 <template>
-    <div class="blog-wrapper no-user">
-        <div class="blog-content">
+    <div class="story-wrapper no-user">
+        <div class="story-content">
             <div>
                 <h2 v-if="post.welcomeScreen">{{post.title}}</h2>
                 <h2 v-else>{{post.title}}</h2>
@@ -14,7 +14,7 @@
                 </router-link>
             </div>
         </div>
-        <div class="blog-photo">
+        <div class="story-photo">
             <img v-if="post.welcomeScreen" :src="require(`../assets/storyPhotos/${post.photo}.jpg`)" alt="">
             <img v-else :src="require(`../assets/storyPhotos/${post.storyCoverPhoto}.jpg`)" alt="">
         </div>
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-wrapper {
+.story-wrapper {
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -45,7 +45,7 @@ export default {
     max-height: 650px;
     flex-direction: row;
   }
-  .blog-content {
+  .story-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,7 +104,7 @@ export default {
       }
     }
   }
-  .blog-photo {
+  .story-photo {
     order: 1;
     flex: 3;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -123,16 +123,16 @@ export default {
     }
   }
   &:nth-child(even) {
-    .blog-content {
+    .story-content {
       order: 2;
     }
-    .blog-photo {
+    .story-photo {
       order: 1;
     }
   }
 }
  .no-user:first-child {
-   .blog-content {
+   .story-content {
      background-color: #303030;
      color: #fff;
    }
